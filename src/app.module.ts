@@ -4,8 +4,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-// Importa aquí otros módulos necesarios (como el de productos si ya lo tienes)
+// Importa aquí otros módulos necesarios 
 import { ProductsModule } from './products/products.module';
+import { CustomersModule } from './customers/customers.module';
+import { TransactionsModule } from './transactions/transactions.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { ProductsModule } from './products/products.module';
 
     // Módulos de la aplicación
     ProductsModule,
+    CustomersModule,
+    TransactionsModule
   ],
   controllers: [AppController],
   providers: [AppService],
