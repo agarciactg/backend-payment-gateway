@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { ProductsModule } from './products/products.module';
 import { CustomersModule } from './customers/customers.module';
 import { TransactionsModule } from './transactions/transactions.module';
+import { DeliveriesModule } from './deliveries/deliveries.module';
 
 @Module({
   imports: [
@@ -33,7 +34,8 @@ import { TransactionsModule } from './transactions/transactions.module';
     // Módulos de la aplicación
     ProductsModule,
     CustomersModule,
-    TransactionsModule
+    TransactionsModule,
+    DeliveriesModule
   ],
   controllers: [AppController],
   providers: [AppService],
