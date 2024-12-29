@@ -9,6 +9,7 @@ import { ProductsModule } from './products/products.module';
 import { CustomersModule } from './customers/customers.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { DeliveriesModule } from './deliveries/deliveries.module';
+import { WompiModule } from './wompi_apis/wompi_service.module';
 
 @Module({
   imports: [
@@ -35,7 +36,8 @@ import { DeliveriesModule } from './deliveries/deliveries.module';
     ProductsModule,
     CustomersModule,
     TransactionsModule,
-    DeliveriesModule
+    DeliveriesModule,
+    WompiModule
   ],
   controllers: [AppController],
   providers: [AppService],

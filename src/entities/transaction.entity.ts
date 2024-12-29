@@ -1,6 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-
-
 import { Product } from './product.entity';
 import { Customer } from './customer.entity';
 
@@ -20,4 +18,7 @@ export class Transaction {
 
   @ManyToOne(() => Customer, (customer) => customer.id)
   customer: Customer;
+
+  @Column({ nullable: true }) // Campo opcional
+  wompiTransactionId?: string; // ID de la transacción en Wompi
 }
