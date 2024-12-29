@@ -37,29 +37,51 @@ export class WompiService {
     }
 
     // Crear transacción
-    async createTransaction(transactionPayload: any) {
-        const url = `${this.apiBaseUrl}/transactions`;
+    async createTransaction(transactionPayload: any, appTransactionPayload: any) {
+        // Wompi Transaction
+        const wompiUrl = `${this.apiBaseUrl}/transactions`;
         const headers = {
             Authorization: `Bearer ${this.privateKey}`,
             'Content-Type': 'application/json',
         };
 
         const signature = {
-            "signature": this.generateSignature(
+            signature: this.generateSignature(
                 transactionPayload.reference,
                 transactionPayload.amount_in_cents,
-                transactionPayload.currency
-            )
-        }
+                transactionPayload.currency,
+            ),
+        };
 
-        // created signature
-        const transaction_data = { ...signature, ...transactionPayload }
+        // Crea la firma y combina los datos
+        const wompiTransactionData = { ...signature, ...transactionPayload };
 
-        const response = await lastValueFrom(
-            this.httpService.post(url, transaction_data, { headers }),
+        // Llama a Wompi y guarda el resultado
+        const wompiResponse = await lastValueFrom(
+            this.httpService.post(wompiUrl, wompiTransactionData, { headers }),
         );
 
-        return response.data;
+        // Obtener el ID de la transacción creada en Wompi
+        const wompiTransactionId = wompiResponse.data?.data?.id;
+
+        // App Transaction
+        const appTransactionData = {
+            productId: appTransactionPayload.productId,
+            customerId: appTransactionPayload.customerId,
+            amount: transactionPayload.amount_in_cents, // Convertir a la escala original si es necesario
+            wompiTransactionId, // Asocia el ID de Wompi con tu transacción local
+        };
+
+        // Llama al endpoint interno para registrar los datos
+        // TODO: modificar el localhost y que tome la url base.
+        const appResponse = await lastValueFrom(
+            this.httpService.post('http://localhost:3000/transactions', appTransactionData),
+        );
+
+        return {
+            wompiTransaction: wompiResponse.data,
+            appTransaction: appResponse.data,
+        };
     }
 
     // Obtener detalle de transacción

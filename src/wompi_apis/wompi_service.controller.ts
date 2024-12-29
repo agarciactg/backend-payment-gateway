@@ -7,7 +7,7 @@ import { CreateTransactionDto } from './dto/create-transaction-w';
 @ApiTags('Wompi')
 @Controller('wompi')
 export class WompiController {
-  constructor(private readonly wompiService: WompiService) {}
+  constructor(private readonly wompiService: WompiService) { }
 
   // 1. Tokenizar tarjeta
   @Post('tokenize-card')
@@ -36,6 +36,8 @@ export class WompiController {
       cardToken,
       installments,
       acceptanceToken,
+      productId,
+      customerId
     } = transactionDetails;
 
     const payload = {
@@ -51,7 +53,9 @@ export class WompiController {
       acceptance_token: acceptanceToken,
     };
 
-    return this.wompiService.createTransaction(payload);
+    const appTransactionPayload = { productId, customerId };
+
+    return this.wompiService.createTransaction(payload, appTransactionPayload);
   }
 
   // 4. Obtener detalle de transacción
