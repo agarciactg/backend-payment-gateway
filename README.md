@@ -8,6 +8,7 @@ Este proyecto constituye el backend del sistema de gestión de productos y pagos
 - [TypeScript](https://www.typescriptlang.org/) - Superconjunto tipado de JavaScript.
 - [Axios](https://axios-http.com/) - Cliente HTTP para integraciones con APIs externas.
 - [Wompi API](https://docs.wompi.co/) - Pasarela de pagos para la gestión de transacciones.
+- [PostgreSQL](https://www.postgresql.org/) - Sistema de gestión de bases de datos relacional.
 
 ## Estructura del Proyecto
 
@@ -58,6 +59,44 @@ Integra la pasarela de pagos Wompi para la tokenización de tarjetas y creación
 - **Archivo clave**: `wompi_service.controller.ts`
 - **Endpoint**: `/wompi`
 
+## Configuración de la Base de Datos
+
+El proyecto utiliza **PostgreSQL** como base de datos. Configura las credenciales en un archivo `.env`:
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=toor1213
+DB_NAME=wompi_db
+```
+
+### Creación de la Base de Datos
+
+1. Accede a PostgreSQL:
+
+   ```bash
+   psql -U postgres
+   ```
+
+2. Crea la base de datos:
+
+   ```sql
+   CREATE DATABASE wompi_db;
+   ```
+
+3. Verifica que la base de datos fue creada:
+
+   ```sql
+   \l
+   ```
+
+4. Sal de PostgreSQL:
+
+   ```sql
+   \q
+   ```
+
 ## Instalación
 
 1. Clona el repositorio:
@@ -76,7 +115,11 @@ Integra la pasarela de pagos Wompi para la tokenización de tarjetas y creación
 3. Configura las variables de entorno creando un archivo `.env` en la raíz del proyecto. Un ejemplo:
 
    ```env
-   DATABASE_URL=postgresql://user:password@localhost:5432/db_name
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_USERNAME=postgres
+   DB_PASSWORD=toor1213
+   DB_NAME=wompi_db
    WOMPI_API_KEY=your_wompi_api_key
    ```
 
@@ -137,4 +180,3 @@ npm run test:e2e
 ## Licencia
 
 Este proyecto está bajo la licencia **MIT**.
-
