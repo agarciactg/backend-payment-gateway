@@ -14,6 +14,10 @@ export class ProductsService {
   findAll() {
     return this.productsRepository.find();
   }
+  
+  findOne(id: number) {
+    return this.productsRepository.findOneBy({ id });
+  }
 
   create(createProductDto: CreateProductDto) {
     const product = this.productsRepository.create(createProductDto);
